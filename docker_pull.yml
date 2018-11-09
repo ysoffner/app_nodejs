@@ -5,7 +5,7 @@
   - name: Build image NodeJS
     docker_image:
        path: ./
-       dockerfile: Dockerfile_lts
+       dockerfile: Dockerfile_node
        name: ysoffner/app_nodejs
 
 #nginx
