@@ -1,0 +1,14 @@
+- hosts: localhost
+  tasks:
+
+  - name: Stop container
+    command: docker stop app_nodejs app_nginx
+
+  - name: Delete container
+    command: docker rm app_nodejs app_nginx
+
+  - name: Delete images
+    command: docker rmi ysoffner/app_nodejs ysoffner/app_nginx
+
+  - name: Delete network
+    command: docker network rm ysoffner_net
