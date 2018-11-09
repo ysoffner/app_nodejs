@@ -13,7 +13,7 @@ if (process.env.NODE_APP_INSTANCE == 0) {
 }
 
 app.get('/', function (req, res){
-  res.send('Rotiado para a porta ' + PORT);
+  res.send('Access: ' + PORT);
   console.log('NodeJS Cluster:'+ PORT);
   // console.log(process.env);
 });

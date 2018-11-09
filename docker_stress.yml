@@ -4,5 +4,5 @@
   - name: Build Bombardier
     docker_image:
      path: ./
-     dockerfile: Dockerfile_bombardier
+     dockerfile: Dockerfiles/Dockerfile_bombardier
      name: ysoffner/app_bombardier

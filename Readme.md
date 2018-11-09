@@ -14,12 +14,16 @@ sudo apt-get install python-pip python-dev build-essential
 
 sudo pip install --upgrade pip
 
+# Comandos
+`ansible-playbook docker_start.yml`
+`ansible-playbook docker_delete.yml`
+`ansible-playbook docker_stress.yml`
 
 # Testes
 <!-- Testes de build -->
-docker build -f Dockerfile_lts -t ysoffner/app_nodejs .
+docker build -f Dockerfiles/Dockerfile_node -t ysoffner/app_nodejs .
 
-docker build -f Dockerfile_nginx -t ysoffner/app_nginx .
+docker build -f Dockerfiles/Dockerfile_nginx -t ysoffner/app_nginx .
 
 <!-- Teste Config Nginx -->
 docker run --rm --name some-nginx -v ${PWD}/roles/nginx/files/nginx.conf:/etc/nginx/nginx.conf  nginx
@@ -67,8 +71,8 @@ Bombardier: ansible-playbook docker_stress.yml
 docker run --rm -i --network=ysoffner_net ysoffner/app_bombardier -c 200 -d 10s -l http://{{ $IP_app_nginx }}
 
 k6: https://docs.k6.io/docs/running-k6
-docker run --rm -i --network=ysoffner_net loadimpact/k6 run - <script.js
-docker run --rm -i --network=ysoffner_net loadimpact/k6 run --vus 10 --duration 30s - <script.js
+docker run --rm -i --network=ysoffner_net loadimpact/k6 run - <scripts/extress_k6.js
+docker run --rm -i --network=ysoffner_net loadimpact/k6 run --vus 10 --duration 30s - <scripts/extress_k6.js
 ```
 
 <!-- 

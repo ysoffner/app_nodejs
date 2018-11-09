@@ -5,33 +5,15 @@
   - name: Build image NodeJS
     docker_image:
        path: ./
-       dockerfile: Dockerfile_node
+       dockerfile: Dockerfiles/Dockerfile_node
        name: ysoffner/app_nodejs
 
 #nginx
   - name: Build image Nginx
     docker_image:
        path: ./
-       dockerfile: Dockerfile_nginx
+       dockerfile: Dockerfiles/Dockerfile_nginx
        name: ysoffner/app_nginx
-
-#CLEAN
-  # - name: Remove container from all networks
-  #   docker_container:
-  #     name: app_nodejs
-  #     purge_networks: yes
-
-  # - name: Remove container from all networks
-  #   docker_container:
-  #     name: app_nginx
-  #     purge_networks: yes
-
-  # - name: Delete a network, disconnecting all containers
-  #   docker_network:
-  #     name: ysoffner_net
-  #     state: absent
-  #     force: yes
-#END CLEAN
 
   - name: Create a network with options
     docker_network:
