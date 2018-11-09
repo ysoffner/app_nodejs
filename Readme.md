@@ -1,33 +1,22 @@
-# Instalação Ansible
-sudo apt-get update
-
-sudo apt-get install software-properties-common
-
-sudo apt-add-repository ppa:ansible/ansible
-
-sudo apt-get update
-
-sudo apt-get install ansible
-
-
-sudo apt-get install python-pip python-dev build-essential
-
-sudo pip install --upgrade pip
-
 # Comandos
-`ansible-playbook docker_start.yml`
-`ansible-playbook docker_delete.yml`
-`ansible-playbook docker_stress.yml`
+```
+<!-- Build Dockerfiles -->
+ansible-playbook docker_start.yml
+<!-- Delete containers/images -->
+ansible-playbook docker_delete.yml
+<!-- Build another images -->
+ansible-playbook docker_others.yml
+```
 
 # Testes
+```
 <!-- Testes de build -->
 docker build -f Dockerfiles/Dockerfile_node -t ysoffner/app_nodejs .
-
 docker build -f Dockerfiles/Dockerfile_nginx -t ysoffner/app_nginx .
 
 <!-- Teste Config Nginx -->
 docker run --rm --name some-nginx -v ${PWD}/roles/nginx/files/nginx.conf:/etc/nginx/nginx.conf  nginx
-
+```
 # Output Server
 docker exec -ti app_nodejs pm2 logs
 
@@ -39,7 +28,7 @@ round-robin: las peticiones son distribuidas entre los servidores de forma cícl
 least-connected: la siguiente petición es atendida por el servidor con menos conexiones activas.
 
 ip-hash: se selecciona el servidor que atenderá la petición en base a algún dato como la dirección IP, de esta forma todas las peticiones de un usuario son atendidas por el mismo servidor.
- -->
+-->
 # Melhorias
 * Utilizar Alpine como imagem no Dockerfile
 * Automatizar as tarefas com o Ansible
@@ -62,12 +51,11 @@ https://medium.com/@ahmadfarag/ansible-in-action-f2f17706931
 
 # PM2.IO
 Gerar chave no site https://app.pm2.io, e executa-la com o container rodando
-`docker exec -ti app_nodejs pm2 link xxxxxxx yyyyyyyyy app_nodejs`
+```docker exec -ti app_nodejs pm2 link xxxxxxx yyyyyyyyy app_nodejs```
 
 # STRESS
-
 ```
-Bombardier: ansible-playbook docker_stress.yml
+Bombardier: ansible-playbook docker_others.yml
 docker run --rm -i --network=ysoffner_net ysoffner/app_bombardier -c 200 -d 10s -l http://{{ $IP_app_nginx }}
 
 k6: https://docs.k6.io/docs/running-k6
