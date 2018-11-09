@@ -56,7 +56,7 @@ http://www.acuriousanimal.com/2017/08/20/using-pm2-to-manage-cluster.html
 https://medium.com/bigpanda-engineering/using-ansible-to-compile-nginx-from-sources-with-custom-modules-f6e6c6a42493
 https://medium.com/@ahmadfarag/ansible-in-action-f2f17706931
 
-#PM2.IO
+# PM2.IO
 Gerar chave no site https://app.pm2.io, e executa-la com o container rodando
 `docker exec -ti app_nodejs pm2 link xxxxxxx yyyyyyyyy app_nodejs`
 
