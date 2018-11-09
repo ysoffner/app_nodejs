@@ -1,0 +1,52 @@
+- hosts: localhost
+  tasks:
+
+#nodejs
+  - name: Build image NodeJS
+    docker_image:
+       path: ./
+       dockerfile: Dockerfile_lts
+       name: ysoffner/app_nodejs
+
+#nginx
+  - name: Build image Nginx
+    docker_image:
+       path: ./
+       dockerfile: Dockerfile_nginx
+       name: ysoffner/app_nginx
+
+#CLEAN
+  # - name: Remove container from all networks
+  #   docker_container:
+  #     name: app_nodejs
+  #     purge_networks: yes
+
+  # - name: Remove container from all networks
+  #   docker_container:
+  #     name: app_nginx
+  #     purge_networks: yes
+
+  # - name: Delete a network, disconnecting all containers
+  #   docker_network:
+  #     name: ysoffner_net
+  #     state: absent
+  #     force: yes
+#END CLEAN
+
+  - name: Create a network with options
+    docker_network:
+      name: ysoffner_net
+
+  - name: Start container, connect to network and link
+    docker_container:
+      name: app_nodejs
+      image: ysoffner/app_nodejs
+      networks:
+        - name: ysoffner_net
+
+  - name: Start container, NGINX
+    docker_container:
+      name: app_nginx
+      image: ysoffner/app_nginx
+      networks:
+        - name: ysoffner_net
