@@ -1,0 +1,32 @@
+# - Salva a pasta do projeto
+# - Salva as imagens (Dockerfile)
+# - Salvar container (docker commit)
+# - O ambiente deve ser todo configurado através de gerenciador de configuração. Ao final da tarefa e execução do processo, deveremos ter um ambiente funcional;
+# - Construa dentro de sua automação um processo de deploy e rollback seguro e rápido da aplicação node. O deploy e rollback deverá garantir a instalação das dependências node novas (caso sejam adicionadas ou alteradas a versão de algum dependência por exemplo), deverá salvar a versão antiga para possível rollback e reiniciar todos processos node sem afetar a disponibilidade global da aplicação na máquina;
+
+
+
+# Como o projeto inteiro fica no mesmo diretorio, vou controlar o deploy e rollback por branches
+
+# Muda de branch, commita e push
+# volta para a master e a atualiza
+# mata os containers (docker_delete)
+# sobe os novos containers (docker_start)
+
+---
+- hosts: localhost
+  tasks:
+
+  - name: Mudando de branch
+    command: git checkout -b {{ versao2 }}
+    # debug: var=ansible_date_time
+
+  - name: Salvando a branch
+    command: git commit -am "{{ versao2 }}"
+  
+  
+  - name: Salvando a branch
+    command: git push -u origin {{ versao2 }}
+  
+
+    # debug: var=ansible_date_time
