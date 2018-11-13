@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Output branchRollback
+    command: cat branchRollback.txt
+    register: branchRollback
+
+  - name: Renomeando a branch
+    command: git checkout {{ branchRollback.stdout }}
+
+  - name: Atualizando master
+    command: git pull
+
+  - name: Parando os serviços
+    command: ansible-playbook docker_delete.yml
+    ignore_errors: yes
+
+  - name: Inicia os serviços
+    command: ansible-playbook docker_start.yml

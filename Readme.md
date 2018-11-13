@@ -6,6 +6,10 @@ ansible-playbook docker_start.yml
 ansible-playbook docker_delete.yml
 <!-- Build another images -->
 ansible-playbook docker_others.yml
+<!-- Deploy -->
+ansible-playbook docker_deploy.yml
+<!-- Rollback -->
+ansible-playbook docker_rollback.yml
 ```
 
 # Testes
@@ -30,11 +34,11 @@ least-connected: la siguiente petición es atendida por el servidor con menos co
 ip-hash: se selecciona el servidor que atenderá la petición en base a algún dato como la dirección IP, de esta forma todas las peticiones de un usuario son atendidas por el mismo servidor.
 -->
 # Melhorias
-* Utilizar Alpine como imagem no Dockerfile
+* Utilizar Alpine como imagem no Dockerfile - OK
 * Automatizar as tarefas com o Ansible
-* Criar esquema de deploy/rollback
+* Criar esquema de deploy/rollback - OK
 * No NodeJS Cluster, balancear automaticamente pelos nós criados
-* Criar um script que rode um teste de carga e demostre qual o Throughput máximo que seu servidor consegue atingir
+* Criar um script que rode um teste de carga e demostre qual o Throughput máximo que seu servidor consegue atingir - OK
 <!-- Obtain the number of CPUs/cores
 num_cpu=$(grep -c ^processor /proc/cpuinfo)
  -->

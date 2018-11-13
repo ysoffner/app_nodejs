@@ -1,12 +1,25 @@
 - hosts: localhost
   tasks:
 
-#nodejs
+# nodejs
   - name: Build image NodeJS
     docker_image:
        path: ./
        dockerfile: Dockerfiles/Dockerfile_node
        name: ysoffner/app_nodejs
+
+#ALPINE
+  # - name: Build image NodeJS
+  #   docker_image:
+  #      path: ./
+  #      dockerfile: Dockerfiles/Dockerfile_node_alpine
+  #      name: ysoffner/app_nodejs_alpine
+
+  # - name: Build image NodeJS
+  #   docker_image:
+  #      path: ./
+  #      dockerfile: Dockerfiles/Dockerfile_node_alpine_run
+  #      name: ysoffner/app_nodejs_alpine_run
 
 #nginx
   - name: Build image Nginx
@@ -25,6 +38,14 @@
       image: ysoffner/app_nodejs
       networks:
         - name: ysoffner_net
+
+#ALPINE
+  # - name: Start container, connect to network and link
+  #   docker_container:
+  #     name: app_nodejs
+  #     image: ysoffner/app_nodejs_alpine_run
+  #     networks:
+  #       - name: ysoffner_net
 
   - name: Start container, NGINX
     docker_container:

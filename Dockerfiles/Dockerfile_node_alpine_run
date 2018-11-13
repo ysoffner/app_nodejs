@@ -1,0 +1,23 @@
+FROM ysoffner/app_nodejs_alpine
+#Image Reference: https://github.com/nodejs/docker-node/blob/120b465c249cf08d7939a3a0c07fec897cfcf91d/11/stretch/Dockerfile
+
+MAINTAINER "Yuri Soffner" <ysoffner@gmail.com>
+#Melhorias: from alpine:nodejs
+
+ENV WORK_DIR="src"
+ENV MODULES="express"
+
+#If mantain package: #COPY package.json /app/package.json
+RUN mkdir /$WORK_DIR; cd /$WORK_DIR && npm init -y && \
+npm install $MODULES --save && \
+cat package.json
+
+RUN npm install pm2 -g
+
+# Bundle app source
+COPY app/ /$WORK_DIR/
+
+WORKDIR /$WORK_DIR
+
+# EXPOSE  3000
+CMD [ "pm2-runtime", "start", "pm2.yml" ]

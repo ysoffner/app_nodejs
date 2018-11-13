@@ -16,17 +16,29 @@
 ---
 - hosts: localhost
   tasks:
+  - name: Branch de backup
+    shell: printf '{{ versao2 }}' > branchRollback.txt
 
-  - name: Mudando de branch
-    command: git checkout -b {{ versao2 }}
-    # debug: var=ansible_date_time
+  - name: Output branchRollback
+    command: cat branchRollback.txt
+    register: branchRollback
 
-  - name: Salvando a branch
-    command: git commit -am "{{ versao2 }}"
-  
-  
-  - name: Salvando a branch
-    command: git push -u origin {{ versao2 }}
-  
+  - name: Renomeando a branch
+    command: git checkout -b {{ branchRollback.stdout }}
 
-    # debug: var=ansible_date_time
+  - name: Salvando o backup
+    command: git commit -am "{{ branchRollback.stdout }}"
+    ignore_errors: yes
+  
+  - name: Voltando pra master
+    command: git checkout master
+
+  - name: Atualizando master
+    command: git pull
+
+  - name: Parando os serviços
+    command: ansible-playbook docker_delete.yml
+    ignore_errors: yes
+
+  - name: Inicia os serviços
+    command: ansible-playbook docker_start.yml
